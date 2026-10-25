@@ -17,6 +17,7 @@ export default function Header() {
     useEffect(()=> {fetchCategories()}, [])
     const categories = useAppStore(state => state.categories)
     const searchRecipes = useAppStore(state => state.searchRecipes)
+    const notification = useAppStore(state => state.showNotification)
 
     const handleChange = (e : ChangeEvent<HTMLInputElement>| ChangeEvent<HTMLSelectElement>)=>{
         setSearchFilters({
@@ -29,7 +30,13 @@ export default function Header() {
         e.preventDefault()
 
         if(Object.values(searchFilters).includes('')){
-            console.log('Todos los campos son obligatorios')
+            notification(
+                {
+                    text: 'Todos los campos son obligatorios',
+                    error: true
+                }
+            )
+            // console.log('Todos los campos son obligatorios')
             return
         }
 
@@ -45,12 +52,12 @@ export default function Header() {
                     </div>
                     <nav className='flex gap-4'>
                         <NavLink
-                            to="/" className= {({isActive}) => isActive ? 'text-orage-500 uppercase font-bold'  : 'text-white uppercase font-bold'}>
+                            to="/" className= {({isActive}) => isActive ? 'text-orange-500 uppercase font-bold'  : 'text-white uppercase font-bold'}>
                             Inicio
                         </NavLink>
                         <NavLink
                             to="/favoritos"
-                            className= {({isActive}) => isActive ? 'text-orage-500 uppercase font-bold'  : 'text-white uppercase font-bold'}>
+                            className= {({isActive}) => isActive ? 'text-orange-500 uppercase font-bold'  : 'text-white uppercase font-bold'}>
                             Favoritos
                         </NavLink>
                     </nav>
